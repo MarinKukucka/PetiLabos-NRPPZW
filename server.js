@@ -16,9 +16,6 @@ const config = {
 
 const prisma = new PrismaClient();
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'public'));
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -51,7 +48,7 @@ app.get('/pictures', async (req, res) => {
     try{
         const pictures = await prisma.picture.findMany();
 
-        res.render('gallery', { pictures });
+        res.status(200).json({ pictures });
     }
     catch(err){
         console.error(err);
